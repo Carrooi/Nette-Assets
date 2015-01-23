@@ -1,0 +1,43 @@
+php:
+	date.timezone: Europe/Prague
+
+
+extensions:
+	assets: Carrooi\Assets\DI\AssetsExtension
+
+
+nette:
+	security:
+		frames: null
+
+	session:
+		autoStart: false
+
+
+services:
+
+	cacheStorage:
+		class: Nette\Caching\Storages\MemoryStorage
+
+
+assets:
+
+	debug: true
+
+	front:
+
+		css:
+			compiler: css
+			paths:
+				- %appDir%/files/css/style.css
+				- [mask: '*.css', from: %appDir%/files/css/components]
+				- [mask: '*.css', in: %appDir%/files/css/core]
+			target: %appDir%/files/_build.css
+			publicPath: /files/_build.css
+
+		js:
+			compiler: js
+			paths:
+				- %appDir%/files/js
+			target: %appDir%/files/_build.js
+			publicPath: /files/_build.js
