@@ -129,7 +129,8 @@ public function __construct(\Carrooi\Assets\Assets $assets)
 
 ## CompilerExtension
 
-Your compiler extensions can also implement `\Carrooi\Assets\DI\IAssetsProvider` interface for some additional paths.
+Your compiler extensions can also implement `\Carrooi\Assets\DI\IAssetsProvider` interface for some additional 
+configuration.
 
 ```php
 namespace App\DI;
@@ -144,12 +145,14 @@ class AppExtension extends CompilerExtension implements IAssetsProvider
 	/**
 	 * @return array
 	 */
-	public function getAssetsFiles()
+	public function getAssetsConfiguration()
 	{
 		return [
 			'front' => [
 				'css' => [
-					__DIR__. '/../widget.css',
+					'paths' => [
+						__DIR__. '/../widget.css',
+					],
 				],
 			],
 		]
@@ -162,3 +165,6 @@ class AppExtension extends CompilerExtension implements IAssetsProvider
 
 * 1.0.0
 	+ First version
+
+* 1.0.1
+	+ IAssetsProvider::getAssetsFiles() renamed to ::getAssetsConfiguration() [**BC Break**]

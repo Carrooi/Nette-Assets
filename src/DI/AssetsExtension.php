@@ -53,11 +53,10 @@ class AssetsExtension extends CompilerExtension
 			->setClass('Carrooi\Assets\UI\AssetsControl')
 			->setImplement('Carrooi\Assets\UI\IAssetsControlFactory');
 
-		$others = [];
 		foreach ($this->compiler->getExtensions('Carrooi\Assets\DI\IAssetsProvider') as $extension) {
 			/** @var \Carrooi\Assets\DI\IAssetsProvider $extension */
 
-			$others = Helpers::merge($others, $extension->getAssetsFiles());
+			$config = Helpers::merge($config, $extension->getAssetsConfiguration());
 		}
 
 		foreach ($config as $name => $namespace) {
@@ -70,10 +69,6 @@ class AssetsExtension extends CompilerExtension
 
 			foreach ($namespace as $rName => $resource) {
 				$resource = Helpers::merge($resource, $this->resourceDefaults);
-
-				if (isset($others[$name], $others[$name][$rName])) {
-					$resource['paths'] = Helpers::merge($resource['paths'], $others[$name][$rName]);
-				}
 
 				$resourceName = $this->prefix('resource.'. $name. '.'. $rName);
 				$resourceDef = $builder->addDefinition($resourceName)

@@ -13,6 +13,6 @@ interface IAssetsProvider
 	/**
 	 * @return array
 	 */
-	public function getAssetsFiles();
+	public function getAssetsConfiguration();
 
 }

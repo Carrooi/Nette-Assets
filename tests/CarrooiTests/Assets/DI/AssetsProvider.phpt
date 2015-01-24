@@ -90,12 +90,14 @@ class OtherAssetsProvider extends CompilerExtension implements IAssetsProvider
 	/**
 	 * @return array
 	 */
-	public function getAssetsFiles()
+	public function getAssetsConfiguration()
 	{
 		return [
 			'front' => [
 				'css' => [
-					__DIR__. '/../files/css/other.css',
+					'paths' => [
+						__DIR__. '/../files/css/other.css',
+					],
 				]
 			],
 		];
