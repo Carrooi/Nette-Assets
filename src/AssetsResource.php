@@ -3,6 +3,7 @@
 namespace Carrooi\Assets;
 
 use Carrooi\Assets\Compilers\BaseCompiler;
+use Carrooi\Helpers\FileSystemHelpers;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 use Nette\Object;
@@ -103,7 +104,7 @@ class AssetsResource extends Object
 	public function getFiles()
 	{
 		if ($this->files === null) {
-			$this->files = Helpers::expandFiles($this->getPaths());
+			$this->files = FileSystemHelpers::expandFiles($this->getPaths());
 		}
 
 		return $this->files;
