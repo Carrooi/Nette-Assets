@@ -168,3 +168,8 @@ class AppExtension extends CompilerExtension implements IAssetsProvider
 
 * 1.0.1
 	+ IAssetsProvider::getAssetsFiles() renamed to ::getAssetsConfiguration() [**BC Break**]
+	
+* 1.0.2
+	+ Optimized dependencies
+	+ Removed unused exceptions
+	+ Optimized checking for files' modifications
