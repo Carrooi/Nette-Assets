@@ -88,7 +88,7 @@ class AssetsResourceTest extends TestCase
 	{
 		$cache = new Cache($this->storage, AssetsResource::CACHE_NAMESPACE);
 		$cache->save('test.files', [
-			'/path/to/file' => 'thereShouldBeHash',
+			'/path/to/file' => 555,
 		]);
 
 		$this->resource->setDebugMode(true);
@@ -99,12 +99,12 @@ class AssetsResourceTest extends TestCase
 	}
 
 
-	public function testNeedsRebuild_hashesNotMatch()
+	public function testNeedsRebuild_fileModified()
 	{
 		$file = FileMock::create('body {}');
 		$cache = new Cache($this->storage, AssetsResource::CACHE_NAMESPACE);
 		$cache->save('test.files', [
-			$file => 'thereShouldBeHash',
+			$file => 555,
 		]);
 
 		$this->resource->setDebugMode(true);
@@ -120,7 +120,7 @@ class AssetsResourceTest extends TestCase
 		$file = FileMock::create('body {}');
 		$cache = new Cache($this->storage, AssetsResource::CACHE_NAMESPACE);
 		$cache->save('test.files', [
-			$file => hash_file('sha512', $file),
+			$file => filemtime($file),
 		]);
 
 		$this->resource->setDebugMode(true);

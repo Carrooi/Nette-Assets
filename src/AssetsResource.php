@@ -44,7 +44,7 @@ class AssetsResource extends Object
 	private $files;
 
 	/** @var array */
-	private $hashes = [];
+	private $times = [];
 
 	/** @var callable[] */
 	private $filters = [];
@@ -239,15 +239,15 @@ class AssetsResource extends Object
 
 	/**
 	 * @param string $path
-	 * @return string
+	 * @return int
 	 */
-	private function getFileHash($path)
+	private function getFileModified($path)
 	{
-		if (!isset($this->hashes[$path])) {
-			$this->hashes[$path] = hash_file('sha512', $path);
+		if (!isset($this->times[$path])) {
+			$this->times[$path] = filemtime($path);
 		}
 
-		return $this->hashes[$path];
+		return $this->times[$path];
 	}
 
 
@@ -304,14 +304,14 @@ class AssetsResource extends Object
 			throw new InvalidStateException('Missing files to build in '. $this->namespace. ' assets resource.');
 		}
 
-		$hashedFiles = [];
+		$timedFiles = [];
 		foreach ($files as $file) {
-			$hashedFiles[$file] = $this->getFileHash($file);
+			$timedFiles[$file] = $this->getFileModified($file);
 		}
 
 		$this->increaseVersion();
 
-		$this->saveCacheData('files', $hashedFiles);
+		$this->saveCacheData('files', $timedFiles);
 
 		$output = $this->compiler->compile($files);
 
@@ -350,7 +350,7 @@ class AssetsResource extends Object
 
 				if ($sortedFiles === $oldFilesPaths) {
 					foreach ($files as $file) {
-						if ($this->getFileHash($file) !== $oldFiles[$file]) {
+						if ($this->getFileModified($file) !== $oldFiles[$file]) {
 							$this->rebuildReason = Assets::REBUILD_REASON_FILES_CHANGES;
 							return true;
 						}
