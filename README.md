@@ -34,14 +34,14 @@ assets:
 				- %appDir%/../www/css/style.css
 				- [mask: '*.css', from: %appDir%/../www/css/components]
 				- [mask: '*.css', in: %appDir%/../www/css/core]
-			target: %appDir/../www/public/style.css
+			target: %appDir%/../www/public/style.css
 			publicPath: /public/style.css
 
 		js:
 			compiler: js
 			paths:
 				- %appDir%/../www/js
-			target: %appDir/../www/public/web.js
+			target: %appDir%/../www/public/web.js
 			publicPath: /public/web.js
 ```
 
